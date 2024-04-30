@@ -1,1 +1,1 @@
-export const BACKEND_URL = ""
+export const BACKEND_URL = process.env.API_URL;
