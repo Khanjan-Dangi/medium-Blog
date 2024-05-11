@@ -8,7 +8,8 @@ type Blog = {
     title: string,
     content: string,
     author: {
-        name: string
+        name: string,
+        quote: string,
     }
 }
 
@@ -18,7 +19,8 @@ export const useBlog = () => {
         title: "",
         content: "",
         author: {
-            name: ""
+            name: "",
+            quote: ""
         }
     });
     const [loading,setLoading] = useState(false);

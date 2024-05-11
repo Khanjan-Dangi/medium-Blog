@@ -99,7 +99,7 @@ blogRouter.get("/bulk", async (c) => {
       content: true,
       author: {
         select: {
-          name: true
+          name: true,
         }
       }
     }
@@ -127,7 +127,8 @@ blogRouter.get("/:id", async (c) => {
         content: true,
         author: {
           select: {
-            name: true
+            name: true,
+            quote: true,
           }
         }
       }

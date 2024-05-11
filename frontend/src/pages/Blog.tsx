@@ -42,7 +42,7 @@ export const Blog = () => {
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-2xl font-semibold mb-2">{blog.author.name || "Anonymous"}</div>
-              <div className="text-md text-gray-500">Random quote that could be placed by the user over here.</div>
+             <div className="text-md text-gray-500">{blog.author.quote || "" }</div>
             </div>
           </div>
         </div>

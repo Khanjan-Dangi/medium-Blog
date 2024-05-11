@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign} from 'hono/jwt'
+import { decode, sign} from 'hono/jwt'
 import { signupInput,signinInput } from '@kd21/medium-common'
 
 const userRouter = new Hono<{
@@ -73,4 +73,33 @@ userRouter.post("/signup", async (c) => {
     })
   })
   
+  userRouter.get("/me",async (c)=>{
+    const header = c.req.header("authorization") || "";
+
+    const token = header.split(" ")[1];
+
+    if(!token){
+      return c.json({msg: "User not signed in!"});
+    }
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const decodedToken = decode(token);
+
+    const userId = decodedToken.payload.id;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId
+      },
+      select: {
+        name: true,
+        quote: true
+      }
+    });
+
+    return c.json(user);
+  })
   export default userRouter;
